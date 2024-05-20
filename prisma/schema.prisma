@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id
+  firstName String
+  lastName String
+  email String
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  properties Property[]
+
+}
+
+
+model Property{
+  PId Int @id @default(autoincrement())
+  name String
+  description String
+  price Int
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  propertyTypeId Int
+  PropertyType PropertyType @relation(fields: [propertyTypeId], references: [id])
+  propertyStatusId Int
+  PropertyStatus PropertyStatus @relation(fields: [propertyStatusId], references: [id])
+  location PropertyLocation?
+  feature PropertyFeature?
+  images PropertyImage[]
+  contact Contact?
+}
+
+model PropertyType {
+  id Int @id @default(autoincrement())
+  value String
+  properties Property[]
+
+}
+
+model PropertyStatus {
+  id Int @id @default(autoincrement())
+  value String
+  properties Property[]
+}
+
+model PropertyLocation {
+  id Int @id @default(autoincrement())
+  streetAddress String
+  city String
+  state String
+  zipCode String
+  region String
+  landmark String
+  propertyId Int @unique
+  property Property @relation(fields: [propertyId], references: [PId],onDelete: Cascade, onUpdate: Cascade) 
+
+}
+
+model PropertyFeature {
+  id Int @id @default(autoincrement())
+
+  bedrooms Int
+  bathrooms Int
+  parkingSpot Int
+  area Int
+  hasSwimmingPool Boolean
+  hasGarden Boolean
+  hasBalcony Boolean
+  propertyId Int @unique
+  property Property @relation(fields: [propertyId], references: [PId],onDelete: Cascade, onUpdate: Cascade)
+}
+
+model PropertyImage {
+  id  Int @id @default(autoincrement())
+  url String
+  propertyId Int 
+  property Property @relation(fields: [propertyId], references: [PId], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Contact {
+  id Int @id @default(autoincrement())
+  name String
+  phone String
+  email String
+  propertyId Int @unique
+  property Property @relation(fields: [propertyId], references: [PId],onDelete: Cascade, onUpdate: Cascade)
+
+  
+}
