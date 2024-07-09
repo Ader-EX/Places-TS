@@ -4,6 +4,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import PropertiesTable from "./_components/PropertiesTable";
+import Search from "./add/_components/Search";
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -42,9 +43,9 @@ const PropertiesPage = async ({ searchParams }: Props) => {
     totalProperties,
   ]);
 
-  console.log(counterProperty);
   return (
     <div>
+      <Search />
       <PropertiesTable
         properties={properties}
         totalPages={Math.ceil(counterProperty / pageSize)}

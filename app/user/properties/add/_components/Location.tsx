@@ -29,7 +29,7 @@ const Location = (props: Props) => {
             {...register("location.street", { required: "Street is required" })}
             errorMessage={errors.location?.street?.message}
             isInvalid={!!errors.location?.street}
-            defaultValue={getValues().location.street}
+            defaultValue={getValues().location?.street || ""}
           >
             {" "}
           </Input>
@@ -38,7 +38,7 @@ const Location = (props: Props) => {
             {...register("location.zip", { required: "Zipcode is required" })}
             errorMessage={errors.location?.zip?.message}
             isInvalid={!!errors.location?.zip}
-            defaultValue={getValues().location.zip}
+            defaultValue={getValues().location?.zip || ""}
           >
             {" "}
           </Input>

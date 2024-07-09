@@ -4,8 +4,9 @@ import Link from "next/link";
 import React from "react";
 interface Props {
   children: React.ReactNode;
+  modalDelete: React.ReactNode;
 }
-const PropertiesLayout = ({ children }: Props) => {
+const PropertiesLayout = ({ children, modalDelete }: Props) => {
   return (
     <div className="p-8">
       <div className="flex w-full justify-between items-center mb-4">
@@ -20,6 +21,7 @@ const PropertiesLayout = ({ children }: Props) => {
         </Link>
       </div>
       {children}
+      {modalDelete}
     </div>
   );
 };
